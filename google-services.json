@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "958581114335",
+    "project_id": "controlcar-bb891",
+    "storage_bucket": "controlcar-bb891.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958581114335:android:f608740387bade6a0d706a",
+        "android_client_info": {
+          "package_name": "com.javal.hilt_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYenN4x3QxmujLiWIZx9Zk5W5ZBlIqwNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
