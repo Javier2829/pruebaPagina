@@ -70,6 +70,9 @@ dependencies {
 
     //navegation
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.common.ktx)
+    implementation(libs.firebase.firestore.ktx)
 
     kapt(libs.hilt.compiler)
     //live data

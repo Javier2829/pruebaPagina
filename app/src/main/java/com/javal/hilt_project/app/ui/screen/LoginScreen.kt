@@ -35,13 +35,14 @@ fun LoginScreen(
     ) {
         TextField(
             value = username,
-            onValueChange = { viewmodel.setUsername(it) },
+            onValueChange = { viewmodel.setUser(it) },
             label = { Text("Usuario") },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
             singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+            maxLines = 1,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
         )
 
         TextField(
@@ -53,15 +54,26 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
             singleLine = true,
+            maxLines = 1,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
         )
-        Text(text = "Registrar Usuario",modifier = Modifier.clickable {
-            navController.navigate(Routes.resgistrarScreen.route)
-        } )
+        Text(text = "Registrar Usuario", modifier = Modifier.clickable {
+            navController.navigate(Routes.resgistrarScreen.route) {
+                popUpTo(Routes.resgistrarScreen.route) {
+                    inclusive = true
+                }
+            }
+        })
         Button(
             onClick = {
-                // Acción de inicio de sesión
-                navController.navigate(Routes.principalScreen.route)
+                if (username.isNotEmpty() && password.isNotEmpty()) {// Verificar que los campos no estén vacíos
+                    viewmodel.singAuthEmail(
+                        username,
+                        password
+                    ) {// Llamar a la función de autenticación
+                        navController.navigate(Routes.principalScreen.route)// Navegar a la pantalla principal
+                    }
+                }
             },
             modifier = Modifier.align(Alignment.End)
         ) {

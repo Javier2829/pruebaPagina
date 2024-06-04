@@ -21,9 +21,12 @@ import com.javal.hilt_project.app.ui.screen.RegistrarUsuario
 import com.javal.hilt_project.app.ui.viewmodel.LoginViewmodel
 import com.javal.hilt_project.ui.theme.Hilt_projectTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+
     private val LoginViewmodel: LoginViewmodel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +52,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(Routes.principalScreen.route) {
-                            PrincipalScreen(navController)
+                            PrincipalScreen(viewModel,navController)
                         }
                         composable(Routes.resgistrarScreen.route) {
                             RegistrarUsuario(viewModel, navController)

@@ -15,8 +15,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import com.javal.hilt_project.app.ui.viewmodel.LoginViewmodel
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import com.javal.hilt_project.app.model.Routes
 
 @Composable
@@ -25,8 +27,8 @@ fun RegistrarUsuario(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    val username by viewModel.user.observeAsState("")
-    val password by viewModel.password.observeAsState("")
+    val username by viewModel.newUser.observeAsState(initial = "")
+    val password by viewModel.newPass.observeAsState(initial = "")
 
     Column(
         modifier = modifier
@@ -38,13 +40,22 @@ fun RegistrarUsuario(
         Text(text = "Registro de Usuario")
         TextField(
             value = username,
-            onValueChange = { viewModel.setUser(it) },
-            label = { Text(text = "Usuario") }
+            onValueChange = { viewModel.onChangeUser(it) },
+            label = { Text(text = "Usuario") },
+            modifier = modifier.padding(top = 10.dp),
+            singleLine = true,
+            maxLines = 1,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
         )
         TextField(
             value = password,
-            onValueChange = { viewModel.setPassword(it) },
-            label = { Text(text = "Contraseña") }
+            onValueChange = { viewModel.onChangePass(it) },
+            label = { Text(text = "Contraseña") },
+            modifier = modifier.padding(top = 10.dp),
+            singleLine = true,
+            maxLines = 1,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            visualTransformation = PasswordVisualTransformation()
         )
 
         Row(
@@ -54,13 +65,17 @@ fun RegistrarUsuario(
         ) {
 
             Button(onClick = {
-                navController.navigate(Routes.principalScreen.route)
+                if (username.isNotEmpty() && password.isNotEmpty()) {
+                    viewModel.creaUsuario(username, password) {
+                        navController.navigate(Routes.principalScreen.route)
+                    }
+                }
 
             }) {
                 Text(text = "Registrar")
             }
             Button(onClick = {
-                navController.popBackStack(Routes.loginScreen.route, true)
+                navController.navigate(Routes.loginScreen.route)
             }) {
                 Text(text = "Cancelar")
 
